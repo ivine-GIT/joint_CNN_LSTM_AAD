@@ -2,7 +2,8 @@ Ensure that the Python environment contains all the required versions as listed 
 
 The PreProc_folder contains all the necessary scripts to preprocess the speech and the EEG signals.
 
-Save the speech signal at 16 kHz (e.g. stim_1min.wav) and save the downsampled EEG signal at 64 Hz (e.g. eeg_1min.mat). The speech file should be a stereo file where each of channel corresponds to a speaker in the dual-speaker auditory scene.
+Save the speech signal at 16 kHz (e.g. stim_1min.wav) and save the downsampled EEG signal at 64 Hz (e.g. eeg_1min.mat). 
+The speech file should be a stereo file where each of the channel corresponds to a particular speaker in the dual-speaker auditory scene.
 
 Run the jupyter notebook Data_processing.ipynb. This script will generate the following files and data.
 	train.csv : csv file containing the filenames of the training set at 3 sec trail duration
