@@ -1,5 +1,5 @@
 
-The important pyTorch scripts in this folder are:
+The pyTorch scripts available in this folder are:
 
 	train.py : Scripts to train the network
   
