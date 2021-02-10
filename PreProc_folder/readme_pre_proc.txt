@@ -13,7 +13,7 @@ Then run the jupyter notebook Data_processing.ipynb. This script will generate t
 	EEG : This folder will get updated with .npy files that contain the EEG data per trial
 	Speech_data : This folder will get updated with .npy files that contain the spectrogram data per trial
 
-At this stage, all the necessary input to the DNN are available
+At this stage, all the necessary inputs to the DNN are available
 
 
 
