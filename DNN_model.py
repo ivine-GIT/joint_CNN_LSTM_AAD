@@ -49,7 +49,7 @@ class convNet(nn.Module):
         # audio_conv_shape[2] = 48 (seq_len)
         # audio_conv_shape[3] = 16 (final freq dim)
 
-        self.lstm_num_units = 48
+        self.lstm_hidden_size = 48
         use_bidirectional = True
 
         if True == use_bidirectional:
@@ -60,10 +60,10 @@ class convNet(nn.Module):
             self.direction_scale = 1 
 
         # 2 is given to add audio data as well
-        self.lstm1 = nn.LSTM((self.eeg_conv_shape[1]+2*self.audio_conv_shape[1]*self.audio_conv_shape[3]), int(self.lstm_num_units*self.direction_scale), 
+        self.lstm1 = nn.LSTM((self.eeg_conv_shape[1]+2*self.audio_conv_shape[1]*self.audio_conv_shape[3]), int(self.lstm_hidden_size*self.direction_scale), 
                              bidirectional=use_bidirectional, batch_first=True)
 
-        tmp = self.lstm_num_units*self.eeg_conv_shape[2]*self.eeg_conv_shape[3]        
+        tmp = self.lstm_hidden_size*self.eeg_conv_shape[2]*self.eeg_conv_shape[3]        
         self.fc1 = nn.Linear(tmp, 128) 
         self.fc1_dp = nn.Dropout(p=self.fc_dp_prob)
 
@@ -185,10 +185,12 @@ class convNet(nn.Module):
         x = torch.cat([aud_x[0], eeg_x, aud_x[1]], dim=2)
 
         # Input = batch, seq_len, input_size (self.eeg_conv_shape[0], self.eeg_conv_shape[2]*self.eeg_conv_shape[3], self.eeg_conv_shape[1]) 
-        # Output = batch, seq_len, lstm_num_units
-        # hidden state: num_layers * num_directions, batch, hidden_size  (read my notes from book)
-        x, hid = self.lstm1(x)
-        x = x.reshape(-1, self.lstm_num_units*self.eeg_conv_shape[2])
+        # Output = batch, seq_len, self.lstm_hidden_size
+        # hidden state: num_layers * num_directions, batch, self.lstm_hidden_size*self.direction_scale  (read my notes from book)
+        # cell state: same as hidden state
+        
+        x, (hidden_state, cell_state) = self.lstm1(x)
+        x = x.reshape(-1, self.lstm_hidden_size*self.eeg_conv_shape[2])
 
         # order: CONV/FC -> BatchNorm -> ReLu(or other activation) -> Dropout -> CONV/FC ->
         x = self.fc1_dp(F.relu(self.fc1(x)))
