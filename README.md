@@ -1,7 +1,7 @@
 
-This repository contains the python scripts developed as a part of the work presented in the paper "Extracting the Locus of Attention at a Cocktail Party from Single-Trial EEG using a Joint CNN-LSTM Model"
+This repository contains the python scripts developed as a part of the work presented in the paper "Extracting the Auditory Attention in a Dual-Speaker Scenario From EEG Using a Joint CNN-LSTM Model"
 
-Paper Link: https://arxiv.org/pdf/2102.03957.pdf
+Paper Link: https://www.frontiersin.org/articles/10.3389/fphys.2021.700655/full
 
 The pyTorch scripts available in this folder are:
 
